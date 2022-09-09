@@ -61,7 +61,7 @@ def search(request):
         paged_products = 0
         if keyword:
             products = Product.objects.order_by('-created_date').filter(Q(description__icontains=keyword) | Q(product_name__icontains=keyword))
-            paginator = Paginator(products, 6)
+            paginator = Paginator(products, 3)
             page = request.GET.get('page')
             #send get_page request to html page
             paged_products = paginator.get_page(page)    
