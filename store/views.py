@@ -66,8 +66,12 @@ def search(request):
             #send get_page request to html page
             paged_products = paginator.get_page(page)    
             product_count = products.count()
-    context = {
-        'products': paged_products,
-        'product_count': product_count,
-    }
-    return render(request, 'store/store.html', context)
+        else:
+            keyword = None
+        context = {
+            'products': paged_products,
+            'product_count': product_count,
+            'keyword' :keyword,
+        }
+        return render(request, 'store/store.html', context)
+    return render(request, 'store/store.html')
