@@ -1,9 +1,10 @@
+from turtle import pen
 from django.shortcuts import render, redirect, get_object_or_404
 from store.models import Product, Variation
 from .models import Cart, CartItem
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
-
+from store.models import TaxCount
 # Create your views here.
 #this is function to fetch the card id from the browser sessions
 def _cart_id(request): #_cart_id means private function
@@ -178,7 +179,9 @@ def cart(request, total=0, quantity=0, cart_items=None):
             quantity += cart_item.quantity
 
         #calculating tax percentange
-        tax = (1.5 * total)/100
+        data = TaxCount.objects.all().values()[0]
+        tax_value= data['tax_percentage']
+        tax = (tax_value * total)/100
         grand_total = total + tax
 
     except ObjectDoesNotExist:
